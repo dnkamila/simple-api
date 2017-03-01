@@ -1,0 +1,50 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;simple-api&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/GO_Projects/src/golang-restful-starter-kit" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/logs" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-order-processing-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-api-gateway-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/gopkg.in" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app" />
+      <root url="file://$USER_HOME$/GO_Projects/src/github.com" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/github.com" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-notification-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/golang.org" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-cronjob" />
+      <root url="file://$USER_HOME$/GO_Projects/src/simple-e-commerce-api" />
+      <root url="file://$USER_HOME$/GO_Projects/src/bitbucket.org" />
+      <root url="file://$USER_HOME$/GO_Projects/src/simple_blog" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-portal-ror" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-location-registry" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-payment-processor-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-trip-routing-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/gopkg.in" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/GO_Projects/src/golang-restful-starter-kit" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/logs" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-order-processing-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-api-gateway-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/gopkg.in" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app" />
+      <root url="file://$USER_HOME$/GO_Projects/src/github.com" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/github.com" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-notification-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/golang.org" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-cronjob" />
+      <root url="file://$USER_HOME$/GO_Projects/src/simple-e-commerce-api" />
+      <root url="file://$USER_HOME$/GO_Projects/src/bitbucket.org" />
+      <root url="file://$USER_HOME$/GO_Projects/src/simple_blog" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-portal-ror" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-location-registry" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-payment-processor-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/mybb-trip-routing-go" />
+      <root url="file://$USER_HOME$/GO_Projects/src/mybb-app/src/gopkg.in" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
