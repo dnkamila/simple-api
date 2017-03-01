@@ -1,3 +1,0 @@
-DROP TABLE IF EXISTS users;
-
-DROP SEQUENCE IF EXISTS user_id_seq;
