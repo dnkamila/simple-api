@@ -85,3 +85,29 @@ func GetUserByUsername(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(userJSON)
 }
+
+func UpdateUserPasswordById(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+
+	var user User
+	err := decoder.Decode(&user)
+
+	if err != nil {
+		log.Printf("Cannot decode JSON %v. Error: %s", r.Body, err.Error())
+		return
+	}
+
+	updatedUser, err := repository.UpdateUserPasswordById(&user)
+	if err != nil {
+		log.Println("Cannot update user")
+		return
+	}
+
+	userJSON, err := json.Marshal(updatedUser)
+	if err != nil {
+		log.Printf("Cannot encode JSON %v. Error: %s", updatedUser, err.Error())
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(userJSON)
+}

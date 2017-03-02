@@ -27,6 +27,7 @@ func (app *App) InitRouter() {
 	app.Router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
 	app.Router.HandleFunc("/user/id/{id}", controllers.GetUserById).Methods("GET")
 	app.Router.HandleFunc("/user/username/{username}", controllers.GetUserByUsername).Methods("GET")
+	app.Router.HandleFunc("/user", controllers.UpdateUserPasswordById).Methods("PUT")
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
