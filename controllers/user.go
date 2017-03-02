@@ -136,3 +136,23 @@ func UpdateUserPasswordByUsername(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(userJSON)
 }
+
+func DeleteUserById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	userId, err := strconv.Atoi(vars["id"])
+	if vars["id"] == "" || err != nil {
+		log.Println("Something wrong with id")
+		return
+	}
+	user := User{Id: userId}
+
+	err = repository.DeleteUserById(&user)
+	if err != nil {
+		log.Println("Cannot delete user")
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status":"ok"}`))
+}

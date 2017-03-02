@@ -79,3 +79,7 @@ func UpdateUserPasswordByUsername(user *User) (*User, error) {
 
 	return GetUserById(user)
 }
+
+func DeleteUserById(user *User) error {
+	return database.GetDB().Delete(user)
+}
