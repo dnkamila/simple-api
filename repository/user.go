@@ -14,13 +14,13 @@ func CreateUser(user *User) (*User, error) {
 		Password: user.Password,
 	})
 	if err != nil {
-		log.Println("Cannot insert user %v to database. Error: %s", user, err.Error())
+		log.Printf("Cannot insert user %v to database. Error: %s", user, err.Error())
 		return nil, err
 	}
 
 	_, id, err := getLastInsertUserId()
 	if err != nil {
-		log.Println("Cannot get last insert id. Error: %s", err.Error())
+		log.Printf("Cannot get last insert id. Error: %s", err.Error())
 		return nil, err
 	}
 
@@ -39,7 +39,17 @@ func getLastInsertUserId() (*types.Result, int, error) {
 func GetUserById(user *User) (*User, error) {
 	err := database.GetDB().Select(user)
 	if err != nil {
-		log.Println("Cannot retrieve user %v from database. Error: %s", user, err.Error())
+		log.Printf("Cannot retrieve user %v from database. Error: %s", user, err.Error())
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func GetUserByUsername(user *User) (*User, error) {
+	err := database.GetDB().Model(&user).Where("username = ?", user.Username).Select()
+	if err != nil {
+		log.Printf("Cannot retrieve user %v from database. Error: %s", user, err.Error())
 		return nil, err
 	}
 

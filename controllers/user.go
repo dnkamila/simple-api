@@ -8,6 +8,7 @@ import (
 	. "simple-api/models"
 	"simple-api/repository"
 	"strconv"
+	"fmt"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -17,7 +18,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&user)
 
 	if err != nil {
-		log.Println("Cannot decode JSON %v. Error: %s", r.Body, err.Error())
+		log.Printf("Cannot decode JSON %v. Error: %s", r.Body, err.Error())
 		return
 	}
 
@@ -29,7 +30,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	userJSON, err := json.Marshal(insertedUser)
 	if err != nil {
-		log.Println("Cannot encode JSON %v. Error: %s", insertedUser, err.Error())
+		log.Printf("Cannot encode JSON %v. Error: %s", insertedUser, err.Error())
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -54,7 +55,7 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 
 	userJSON, err := json.Marshal(retrievedUser)
 	if err != nil {
-		log.Println("Cannot encode JSON %v. Error: %s", retrievedUser, err.Error())
+		log.Printf("Cannot encode JSON %v. Error: %s", retrievedUser, err.Error())
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -62,5 +63,25 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserByUsername(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
+	if vars["username"] == "" {
+		log.Println("Something wrong with username")
+		return
+	}
+	user := User{Username: vars["username"]}
+
+	retrievedUser, err := repository.GetUserByUsername(&user)
+	if err != nil {
+		log.Println("Cannot retrive user")
+		return
+	}
+
+	userJSON, err := json.Marshal(retrievedUser)
+	if err != nil {
+		log.Printf("Cannot encode JSON %v. Error: %s", retrievedUser, err.Error())
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(userJSON)
 }

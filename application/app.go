@@ -25,7 +25,8 @@ func (app *App) InitDB() {
 func (app *App) InitRouter() {
 	app.Router.HandleFunc("/", index)
 	app.Router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
-	app.Router.HandleFunc("/user/{id}", controllers.GetUserById).Methods("GET")
+	app.Router.HandleFunc("/user/id/{id}", controllers.GetUserById).Methods("GET")
+	app.Router.HandleFunc("/user/username/{username}", controllers.GetUserByUsername).Methods("GET")
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
