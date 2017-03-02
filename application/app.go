@@ -17,10 +17,6 @@ func NewApp() *App {
 	return &App{routers.GetRouter(), database.GetDB()}
 }
 
-func (app *App) InitDB() {
-
-}
-
 func (app *App) InitRouter() {
 	app.Router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
 	app.Router.HandleFunc("/user/id/{id}", controllers.GetUserById).Methods("GET")

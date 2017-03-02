@@ -12,7 +12,6 @@ func main() {
 	address := net.JoinHostPort(os.Getenv("APP_HOST"), os.Getenv("APP_PORT"))
 
 	app := application.NewApp()
-	app.InitDB()
 	app.InitRouter()
 
 	http.ListenAndServe(address, app.Router)
