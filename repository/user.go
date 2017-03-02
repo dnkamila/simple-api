@@ -65,3 +65,17 @@ func UpdateUserPasswordById(user *User) (*User, error) {
 
 	return GetUserById(user)
 }
+
+func UpdateUserPasswordByUsername(user *User) (*User, error) {
+	_, err := database.GetDB().Model(&user).
+		Set("password = ?", user.Password).
+		Where("username = ?", user.Username).
+		Returning("*").
+		Update()
+	if err != nil {
+		log.Printf("Cannot update user %v in database. Error: %s", user, err.Error())
+		return nil, err
+	}
+
+	return GetUserById(user)
+}
