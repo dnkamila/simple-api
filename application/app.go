@@ -1,7 +1,6 @@
 package application
 
 import (
-	"net/http"
 	"simple-api/controllers"
 	"simple-api/database"
 	. "simple-api/database"
@@ -23,15 +22,11 @@ func (app *App) InitDB() {
 }
 
 func (app *App) InitRouter() {
-	app.Router.HandleFunc("/", index)
 	app.Router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
 	app.Router.HandleFunc("/user/id/{id}", controllers.GetUserById).Methods("GET")
 	app.Router.HandleFunc("/user/username/{username}", controllers.GetUserByUsername).Methods("GET")
 	app.Router.HandleFunc("/user/id", controllers.UpdateUserPasswordById).Methods("PUT")
 	app.Router.HandleFunc("/user/username", controllers.UpdateUserPasswordByUsername).Methods("PUT")
 	app.Router.HandleFunc("/user/id/{id}", controllers.DeleteUserById).Methods("DELETE")
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("welcome"))
+	app.Router.HandleFunc("/user/username/{username}", controllers.DeleteUserByUsername).Methods("DELETE")
 }

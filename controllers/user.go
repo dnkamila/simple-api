@@ -156,3 +156,22 @@ func DeleteUserById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"status":"ok"}`))
 }
+
+func DeleteUserByUsername(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	if vars["username"] == "" {
+		log.Println("Something wrong with username")
+		return
+	}
+	user := User{Username: vars["username"]}
+
+	err := repository.DeleteUserByUsername(&user)
+	if err != nil {
+		log.Println("Cannot delete user")
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status":"ok"}`))
+}

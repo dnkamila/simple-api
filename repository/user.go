@@ -83,3 +83,8 @@ func UpdateUserPasswordByUsername(user *User) (*User, error) {
 func DeleteUserById(user *User) error {
 	return database.GetDB().Delete(user)
 }
+
+func DeleteUserByUsername(user *User) error {
+	_, err := database.GetDB().Model(&user).Where("username = ?", user.Username).Delete()
+	return err
+}
