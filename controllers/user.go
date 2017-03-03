@@ -21,7 +21,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	insertedUser, err := repository.CreateUser(&user)
+	insertedUser, err := repository.GetUserRepository().CreateUser(&user)
 	if err != nil {
 		log.Println("Cannot insert user")
 		return
@@ -46,7 +46,7 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 	}
 	user := User{Id: userId}
 
-	retrievedUser, err := repository.GetUserById(&user)
+	retrievedUser, err := repository.GetUserRepository().GetUserById(&user)
 	if err != nil {
 		log.Println("Cannot retrive user")
 		return
@@ -70,7 +70,7 @@ func GetUserByUsername(w http.ResponseWriter, r *http.Request) {
 	}
 	user := User{Username: vars["username"]}
 
-	retrievedUser, err := repository.GetUserByUsername(&user)
+	retrievedUser, err := repository.GetUserRepository().GetUserByUsername(&user)
 	if err != nil {
 		log.Println("Cannot retrive user")
 		return
@@ -96,7 +96,7 @@ func UpdateUserPasswordById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	updatedUser, err := repository.UpdateUserPasswordById(&user)
+	updatedUser, err := repository.GetUserRepository().UpdateUserPasswordById(&user)
 	if err != nil {
 		log.Println("Cannot update user")
 		return
@@ -122,7 +122,7 @@ func UpdateUserPasswordByUsername(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	updatedUser, err := repository.UpdateUserPasswordByUsername(&user)
+	updatedUser, err := repository.GetUserRepository().UpdateUserPasswordByUsername(&user)
 	if err != nil {
 		log.Println("Cannot update user")
 		return
@@ -147,7 +147,7 @@ func DeleteUserById(w http.ResponseWriter, r *http.Request) {
 	}
 	user := User{Id: userId}
 
-	err = repository.DeleteUserById(&user)
+	err = repository.GetUserRepository().DeleteUserById(&user)
 	if err != nil {
 		log.Println("Cannot delete user")
 		return
@@ -166,7 +166,7 @@ func DeleteUserByUsername(w http.ResponseWriter, r *http.Request) {
 	}
 	user := User{Username: vars["username"]}
 
-	err := repository.DeleteUserByUsername(&user)
+	err := repository.GetUserRepository().DeleteUserByUsername(&user)
 	if err != nil {
 		log.Println("Cannot delete user")
 		return

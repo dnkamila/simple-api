@@ -8,7 +8,33 @@ import (
 	. "simple-api/models"
 )
 
-func CreateUser(user *User) (*User, error) {
+type UserRepositoryInterface interface {
+	CreateUser(user *User) (*User, error)
+	GetUserById(user *User) (*User, error)
+	GetUserByUsername(user *User) (*User, error)
+	UpdateUserPasswordById(user *User) (*User, error)
+	UpdateUserPasswordByUsername(user *User) (*User, error)
+	DeleteUserById(user *User) error
+	DeleteUserByUsername(user *User) error
+}
+
+var userRepository UserRepositoryInterface
+
+type UserRepository struct {}
+
+func GetUserRepository() UserRepositoryInterface {
+	if userRepository == nil {
+		return &userRepository
+	}
+
+	return userRepository
+}
+
+func SetUserRepository(instance UserRepositoryInterface) {
+	userRepository = instance
+}
+
+func (*UserRepository) CreateUser(user *User) (*User, error) {
 	err := database.GetDB().Insert(&User{
 		Username: user.Username,
 		Password: user.Password,
@@ -36,7 +62,7 @@ func getLastInsertUserId() (*types.Result, int, error) {
 	return result, id, err
 }
 
-func GetUserById(user *User) (*User, error) {
+func (*UserRepository) GetUserById(user *User) (*User, error) {
 	err := database.GetDB().Select(user)
 	if err != nil {
 		log.Printf("Cannot retrieve user %v from database. Error: %s", user, err.Error())
@@ -46,7 +72,7 @@ func GetUserById(user *User) (*User, error) {
 	return user, nil
 }
 
-func GetUserByUsername(user *User) (*User, error) {
+func (*UserRepository) GetUserByUsername(user *User) (*User, error) {
 	err := database.GetDB().Model(&user).Where("username = ?", user.Username).Select()
 	if err != nil {
 		log.Printf("Cannot retrieve user %v from database. Error: %s", user, err.Error())
@@ -56,17 +82,17 @@ func GetUserByUsername(user *User) (*User, error) {
 	return user, nil
 }
 
-func UpdateUserPasswordById(user *User) (*User, error) {
+func (this *UserRepository) UpdateUserPasswordById(user *User) (*User, error) {
 	_, err := database.GetDB().Model(&user).Column("password").Returning("*").Update()
 	if err != nil {
 		log.Printf("Cannot update user %v in database. Error: %s", user, err.Error())
 		return nil, err
 	}
 
-	return GetUserById(user)
+	return this.GetUserById(user)
 }
 
-func UpdateUserPasswordByUsername(user *User) (*User, error) {
+func (this *UserRepository) UpdateUserPasswordByUsername(user *User) (*User, error) {
 	_, err := database.GetDB().Model(&user).
 		Set("password = ?", user.Password).
 		Where("username = ?", user.Username).
@@ -77,14 +103,14 @@ func UpdateUserPasswordByUsername(user *User) (*User, error) {
 		return nil, err
 	}
 
-	return GetUserById(user)
+	return this.GetUserById(user)
 }
 
-func DeleteUserById(user *User) error {
+func (*UserRepository) DeleteUserById(user *User) error {
 	return database.GetDB().Delete(user)
 }
 
-func DeleteUserByUsername(user *User) error {
+func (*UserRepository) DeleteUserByUsername(user *User) error {
 	_, err := database.GetDB().Model(&user).Where("username = ?", user.Username).Delete()
 	return err
 }

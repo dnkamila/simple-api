@@ -1,8 +1,8 @@
 ### SETUP
-###### install
+##### install
     go get github.com/mattes/migrate
 
-###### db migration
+##### db migration
     if psql "host=host user=username password=password port=port sslmode=disable" -l | cut -d \| -f 1 | grep -qw $DB_NAME; then
       echo Database exists. Do nothing
     else
