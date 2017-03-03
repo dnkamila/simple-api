@@ -24,7 +24,7 @@ type UserRepository struct {}
 
 func GetUserRepository() UserRepositoryInterface {
 	if userRepository == nil {
-		return &userRepository
+		return &UserRepository{}
 	}
 
 	return userRepository
