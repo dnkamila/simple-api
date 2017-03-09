@@ -65,7 +65,38 @@ func TestGetUserById(t *testing.T) {
 	server := httptest.NewServer(app.Router)
 	defer server.Close()
 
-	req, err := http.NewRequest("GET", server.URL + "/" + basedUserIdUrl + "/" + strconv.Itoa(user.Id), nil)
+	url := fmt.Sprintf("%s/%s/%s", server.URL, basedUserIdUrl, strconv.Itoa(user.Id))
+	req, err := http.NewRequest("GET", url, nil)
+	res, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res.StatusCode != 200 {
+		t.Errorf("unsuccess with status code: %d", res.StatusCode)
+	}
+}
+
+func TestGetUserByUsername(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	inputUser := User{
+		Username: user.Username,
+	}
+	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)
+	mockUserRepository.EXPECT().GetUserByUsername(&inputUser).Return(&user, nil)
+	repository.SetUserRepository(mockUserRepository)
+
+	app := application.NewApp()
+	app.InitRouter()
+
+	server := httptest.NewServer(app.Router)
+	defer server.Close()
+
+	url := fmt.Sprintf("%s/%s/%s", server.URL, basedUserUsernameUrl, user.Username)
+	req, err := http.NewRequest("GET", url, nil)
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
