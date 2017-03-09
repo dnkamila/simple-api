@@ -24,8 +24,14 @@ func TestCreateUser(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
+	inputUser := User{
+		Id: 0,
+		Username: "kamila@icehousecorp.com",
+		Password: "12345",
+	}
 	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)
-	mockUserRepository.EXPECT().CreateUser(user).Return(&user, nil)
+	mockUserRepository.EXPECT().CreateUser(&inputUser).Return(&user, nil)
+	repository.SetUserRepository(mockUserRepository)
 
 	jsonRequest := fmt.Sprintf(`{"username": "%s", "password": "%s"}`, user.Username, user.Password)
 

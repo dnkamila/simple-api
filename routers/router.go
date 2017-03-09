@@ -9,6 +9,7 @@ type Router struct {
 var router Router
 
 func init() {
+	println("router.init()")
 	router = Router{mux.NewRouter()}
 }
 

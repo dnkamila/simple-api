@@ -6,6 +6,7 @@ import (
 	"log"
 	"simple-api/database"
 	. "simple-api/models"
+	"fmt"
 )
 
 type UserRepositoryInterface interface {
@@ -35,6 +36,7 @@ func SetUserRepository(instance UserRepositoryInterface) {
 }
 
 func (*UserRepository) CreateUser(user *User) (*User, error) {
+	fmt.Printf("repository/user db: %s\n", database.GetDB().Options().Addr)
 	err := database.GetDB().Insert(&User{
 		Username: user.Username,
 		Password: user.Password,
