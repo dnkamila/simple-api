@@ -8,7 +8,6 @@ import (
 	. "simple-api/models"
 	"simple-api/repository"
 	"strconv"
-	"fmt"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +21,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("user %v\n", user)
 	insertedUser, err := repository.GetUserRepository().CreateUser(&user)
 	if err != nil {
 		log.Println("Cannot insert user")

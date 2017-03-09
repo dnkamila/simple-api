@@ -2,9 +2,7 @@ package application
 
 import (
 	"simple-api/controllers"
-	"simple-api/database"
 	. "simple-api/database"
-	"simple-api/routers"
 	. "simple-api/routers"
 )
 
@@ -14,7 +12,7 @@ type App struct {
 }
 
 func NewApp() *App {
-	return &App{routers.GetRouter(), database.GetDB()}
+	return &App{GetRouter(), GetDB()}
 }
 
 func (app *App) InitRouter() {
