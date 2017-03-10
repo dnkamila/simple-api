@@ -1,12 +1,12 @@
 package repository
 
 import (
+	"fmt"
 	"gopkg.in/pg.v5"
 	"gopkg.in/pg.v5/types"
 	"log"
 	"simple-api/database"
 	. "simple-api/models"
-	"fmt"
 )
 
 type UserRepositoryInterface interface {
@@ -21,7 +21,7 @@ type UserRepositoryInterface interface {
 
 var userRepository UserRepositoryInterface
 
-type UserRepository struct {}
+type UserRepository struct{}
 
 func GetUserRepository() UserRepositoryInterface {
 	if userRepository == nil {

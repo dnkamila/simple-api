@@ -1,50 +1,48 @@
 package tests
 
 import (
-	"testing"
-	"github.com/golang/mock/gomock"
-	. "simple-api/models"
 	"fmt"
-	"net/http/httptest"
-	"strings"
-	"simple-api/application"
-	"simple-api/repository"
-	"simple-api/controllers"
-	"strconv"
+	"github.com/golang/mock/gomock"
 	"net/http"
+	"net/http/httptest"
+	"simple-api/application"
+	"simple-api/controllers"
+	. "simple-api/models"
+	"simple-api/repository"
+	"strconv"
+	"strings"
+	"testing"
 )
 
 const (
-	basedUserURL = "/user"
-	basedUserIdUrl = "/user/id"
+	basedUserURL         = "/user"
+	basedUserIdUrl       = "/user/id"
 	basedUserUsernameUrl = "/user/username"
 )
 
 var (
-	id = 1
-	username = "kamila@icehousecorp.com"
-	password = "12345"
+	id         = 1
+	username   = "kamila@icehousecorp.com"
+	password   = "12345"
 	newPasword = "54321"
-	user = User{
-		Id: id,
+	user       = User{
+		Id:       id,
 		Username: username,
 		Password: password,
 	}
 	newUser = User{
-		Id: id,
+		Id:       id,
 		Username: username,
 		Password: newPasword,
 	}
-
 )
-
 
 func TestCreateUser(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
 	inputUser := User{
-		Id: 0,
+		Id:       0,
 		Username: "kamila@icehousecorp.com",
 		Password: "12345",
 	}
@@ -126,7 +124,7 @@ func TestUpdateUserPasswordById(t *testing.T) {
 	defer mockCtrl.Finish()
 
 	inputUser := User{
-		Id: user.Id,
+		Id:       user.Id,
 		Password: newPasword,
 	}
 	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)

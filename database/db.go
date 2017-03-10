@@ -12,12 +12,12 @@ type DB struct {
 }
 
 var (
-	db DB
+	db         DB
 	dbUsername = os.Getenv("DB_USER")
 	dbPassword = os.Getenv("DB_PASSWORD")
-	dbName = os.Getenv("DB_NAME")
+	dbName     = os.Getenv("DB_NAME")
 	dbHostname = os.Getenv("DB_HOST")
-	dbPort = os.Getenv("DB_PORT")
+	dbPort     = os.Getenv("DB_PORT")
 )
 
 func init() {
@@ -31,11 +31,21 @@ func init() {
 }
 
 func setupDBOptions() {
-	if dbUsername == "" { dbUsername = constants.DB_USERNAME }
-	if dbPassword == "" { dbPassword = constants.DB_PASSWORD }
-	if dbName == "" { dbName = constants.DB_NAME }
-	if dbHostname == "" { dbHostname = constants.DB_HOST }
-	if dbPort == "" { dbPort = constants.DB_PORT }
+	if dbUsername == "" {
+		dbUsername = constants.DB_USERNAME
+	}
+	if dbPassword == "" {
+		dbPassword = constants.DB_PASSWORD
+	}
+	if dbName == "" {
+		dbName = constants.DB_NAME
+	}
+	if dbHostname == "" {
+		dbHostname = constants.DB_HOST
+	}
+	if dbPort == "" {
+		dbPort = constants.DB_PORT
+	}
 }
 
 func GetDB() DB {
