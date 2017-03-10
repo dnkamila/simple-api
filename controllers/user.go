@@ -8,6 +8,7 @@ import (
 	. "simple-api/models"
 	"simple-api/repository"
 	"strconv"
+	"fmt"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -90,6 +91,8 @@ func UpdateUserPasswordById(w http.ResponseWriter, r *http.Request) {
 
 	var user User
 	err := decoder.Decode(&user)
+
+	fmt.Printf("[controllers/user] user: %v\n", user)
 
 	if err != nil {
 		log.Printf("Cannot decode JSON %v. Error: %s", r.Body, err.Error())

@@ -20,11 +20,24 @@ const (
 	basedUserUsernameUrl = "/user/username"
 )
 
-var user = User{
-	Id: 1,
-	Username: "kamila@icehousecorp.com",
-	Password: "12345",
-}
+var (
+	id = 1
+	username = "kamila@icehousecorp.com"
+	password = "12345"
+	newPasword = "54321"
+	user = User{
+		Id: id,
+		Username: username,
+		Password: password,
+	}
+	newUser = User{
+		Id: id,
+		Username: username,
+		Password: newPasword,
+	}
+
+)
+
 
 func TestCreateUser(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
@@ -106,4 +119,27 @@ func TestGetUserByUsername(t *testing.T) {
 	if res.StatusCode != 200 {
 		t.Errorf("unsuccess with status code: %d", res.StatusCode)
 	}
+}
+
+func TestUpdateUserPasswordById(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	inputUser := User{
+		Id: user.Id,
+		Password: newPasword,
+	}
+	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)
+	mockUserRepository.EXPECT().UpdateUserPasswordById(&inputUser).Return(&newUser, nil)
+	repository.SetUserRepository(mockUserRepository)
+
+	fmt.Println("before")
+	jsonRequest := fmt.Sprintf(`{"id": %d, "password": "%s"}`, user.Id, newUser.Password)
+	fmt.Println("after")
+
+	w := httptest.NewRecorder()
+
+	r := httptest.NewRequest("PUT", basedUserIdUrl, strings.NewReader(jsonRequest))
+	r.Header.Set("Content-Type", "application/json")
+	controllers.UpdateUserPasswordById(w, r)
 }
