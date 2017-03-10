@@ -133,13 +133,32 @@ func TestUpdateUserPasswordById(t *testing.T) {
 	mockUserRepository.EXPECT().UpdateUserPasswordById(&inputUser).Return(&newUser, nil)
 	repository.SetUserRepository(mockUserRepository)
 
-	fmt.Println("before")
 	jsonRequest := fmt.Sprintf(`{"id": %d, "password": "%s"}`, user.Id, newUser.Password)
-	fmt.Println("after")
 
 	w := httptest.NewRecorder()
 
 	r := httptest.NewRequest("PUT", basedUserIdUrl, strings.NewReader(jsonRequest))
 	r.Header.Set("Content-Type", "application/json")
 	controllers.UpdateUserPasswordById(w, r)
+}
+
+func TestUpdateUserPasswordByUsername(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	inputUser := User{
+		Username: user.Username,
+		Password: newPasword,
+	}
+	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)
+	mockUserRepository.EXPECT().UpdateUserPasswordByUsername(&inputUser).Return(&newUser, nil)
+	repository.SetUserRepository(mockUserRepository)
+
+	jsonRequest := fmt.Sprintf(`{"username": "%s", "password": "%s"}`, user.Username, newUser.Password)
+
+	w := httptest.NewRecorder()
+
+	r := httptest.NewRequest("PUT", basedUserIdUrl, strings.NewReader(jsonRequest))
+	r.Header.Set("Content-Type", "application/json")
+	controllers.UpdateUserPasswordByUsername(w, r)
 }
