@@ -78,7 +78,7 @@ func TestGetUserById(t *testing.T) {
 	server := httptest.NewServer(app.Router)
 	defer server.Close()
 
-	url := fmt.Sprintf("%s/%s/%s", server.URL, basedUserIdUrl, strconv.Itoa(user.Id))
+	url := fmt.Sprintf("%s%s/%s", server.URL, basedUserIdUrl, strconv.Itoa(user.Id))
 	req, err := http.NewRequest("GET", url, nil)
 	res, err := http.DefaultClient.Do(req)
 
@@ -108,7 +108,7 @@ func TestGetUserByUsername(t *testing.T) {
 	server := httptest.NewServer(app.Router)
 	defer server.Close()
 
-	url := fmt.Sprintf("%s/%s/%s", server.URL, basedUserUsernameUrl, user.Username)
+	url := fmt.Sprintf("%s%s/%s", server.URL, basedUserUsernameUrl, user.Username)
 	req, err := http.NewRequest("GET", url, nil)
 	res, err := http.DefaultClient.Do(req)
 
@@ -161,4 +161,34 @@ func TestUpdateUserPasswordByUsername(t *testing.T) {
 	r := httptest.NewRequest("PUT", basedUserIdUrl, strings.NewReader(jsonRequest))
 	r.Header.Set("Content-Type", "application/json")
 	controllers.UpdateUserPasswordByUsername(w, r)
+}
+
+func TestDeleteUserById(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	inputUser := User{
+		Id: user.Id,
+	}
+	mockUserRepository := repository.NewMockUserRepositoryInterface(mockCtrl)
+	mockUserRepository.EXPECT().DeleteUserById(&inputUser).Return(nil)
+	repository.SetUserRepository(mockUserRepository)
+
+	app := application.NewApp()
+	app.InitRouter()
+
+	server := httptest.NewServer(app.Router)
+	defer server.Close()
+
+	url := fmt.Sprintf("%s%s/%s", server.URL, basedUserIdUrl, strconv.Itoa(user.Id))
+	req, err := http.NewRequest("DELETE", url, nil)
+	res, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res.StatusCode != 200 {
+		t.Errorf("unsuccess with status code: %d", res.StatusCode)
+	}
 }
