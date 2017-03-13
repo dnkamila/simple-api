@@ -1,21 +1,20 @@
 package helpers
 
 import (
-	"crypto/rsa"
-	"encoding/pem"
-	"crypto/x509"
 	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
+	"io/ioutil"
 	"os"
 	"simple-api/constants"
-	"io/ioutil"
-	"fmt"
 )
 
 var (
-	privateKey *rsa.PrivateKey
-	publicKey *rsa.PublicKey
+	privateKey         *rsa.PrivateKey
+	publicKey          *rsa.PublicKey
 	privateKeyFilepath = os.Getenv("PRIVATE_KEY_FILEPATH")
-	publicKeyFilepath = os.Getenv("PUBLIC_KEY_FILEPATH")
+	publicKeyFilepath  = os.Getenv("PUBLIC_KEY_FILEPATH")
 )
 
 func init() {
@@ -44,36 +43,38 @@ func GetPublicKey() *rsa.PublicKey {
 }
 
 func InitPPKeyResource() error {
-	println("jwt.InitPPKeyResource() BEGIN")
-	if _, err := os.Stat(privateKeyFilepath); err == os.ErrNotExist {
+	if _, err := os.Stat(privateKeyFilepath); os.IsNotExist(err) {
 		err = initPrivateKeyResource()
 		if err != nil {
 			return err
 		}
 	} else {
-		loadPrivateKey()
+		err = loadPrivateKey()
+		if err != nil {
+			return err
+		}
 	}
 
-	if _, err := os.Stat(publicKeyFilepath); err == os.ErrNotExist {
+	if _, err := os.Stat(publicKeyFilepath); os.IsNotExist(err) {
 		err = initPublicKeyResource()
 		if err != nil {
 			return err
 		}
 	} else {
-		loadPublicKey()
+		err = loadPublicKey()
+		if err != nil {
+			return err
+		}
 	}
-
-	println("jwt.InitPPKeyResource() END")
 
 	return nil
 }
 
 func initPrivateKeyResource() (err error) {
-	println("here try creating private resource")
 	privateKey, err = rsa.GenerateKey(rand.Reader, 2048)
 
 	privateKeyPemBlock := &pem.Block{
-		Type: "RSA PRIVATE KEY",
+		Type:  "RSA PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
 	}
 
@@ -84,17 +85,15 @@ func initPrivateKeyResource() (err error) {
 }
 
 func initPublicKeyResource() (err error) {
-	println("here try creating public resource")
 	publicKey = privateKey.Public().(*rsa.PublicKey)
 
 	publicKeyByte, err := x509.MarshalPKIXPublicKey(publicKey)
 	publicKeyPemBlock := &pem.Block{
-		Type: "RSA PUBLIC KEY",
+		Type:  "RSA PUBLIC KEY",
 		Bytes: publicKeyByte,
 	}
 
 	publicKeyWriter, err := os.OpenFile(publicKeyFilepath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
-	fmt.Printf("publicKeyFilePath: %v\n", publicKeyFilepath)
 	pem.Encode(publicKeyWriter, publicKeyPemBlock)
 
 	return
@@ -117,7 +116,7 @@ func loadPublicKey() error {
 		return err
 	}
 
-	publicKeyPemBlock ,_ := pem.Decode(publicKeyByte)
+	publicKeyPemBlock, _ := pem.Decode(publicKeyByte)
 	publicKeyGeneral, err := x509.ParsePKIXPublicKey(publicKeyPemBlock.Bytes)
 	publicKey = publicKeyGeneral.(*rsa.PublicKey)
 

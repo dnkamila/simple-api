@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 func CreateToken(w http.ResponseWriter, r *http.Request) {
