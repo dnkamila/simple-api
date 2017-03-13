@@ -16,11 +16,15 @@ func NewApp() *App {
 }
 
 func (app *App) InitRouter() {
-	app.Router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
-	app.Router.HandleFunc("/user/id/{id}", controllers.GetUserById).Methods("GET")
-	app.Router.HandleFunc("/user/username/{username}", controllers.GetUserByUsername).Methods("GET")
-	app.Router.HandleFunc("/user/id", controllers.UpdateUserPasswordById).Methods("PUT")
-	app.Router.HandleFunc("/user/username", controllers.UpdateUserPasswordByUsername).Methods("PUT")
-	app.Router.HandleFunc("/user/id/{id}", controllers.DeleteUserById).Methods("DELETE")
-	app.Router.HandleFunc("/user/username/{username}", controllers.DeleteUserByUsername).Methods("DELETE")
+	userRouter := app.Router.PathPrefix("/user").Subrouter()
+	userRouter.HandleFunc("/", controllers.CreateUser).Methods("POST")
+	userRouter.HandleFunc("/id/{id}", controllers.GetUserById).Methods("GET")
+	userRouter.HandleFunc("/username/{username}", controllers.GetUserByUsername).Methods("GET")
+	userRouter.HandleFunc("id", controllers.UpdateUserPasswordById).Methods("PUT")
+	userRouter.HandleFunc("/username", controllers.UpdateUserPasswordByUsername).Methods("PUT")
+	userRouter.HandleFunc("/id/{id}", controllers.DeleteUserById).Methods("DELETE")
+	userRouter.HandleFunc("/username/{username}", controllers.DeleteUserByUsername).Methods("DELETE")
+
+	tokenRouter := app.Router.PathPrefix("/token").Subrouter()
+	tokenRouter.HandleFunc("/", controllers.CreateToken).Methods("POST")
 }

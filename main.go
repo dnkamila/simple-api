@@ -6,10 +6,12 @@ import (
 	"net/http"
 	"os"
 	"simple-api/application"
+	"simple-api/helpers"
 )
 
 func main() {
-	println("main.main()")
+	helpers.InitPPKeyResource()
+
 	address := net.JoinHostPort(os.Getenv("APP_HOST"), os.Getenv("APP_PORT"))
 
 	app := application.NewApp()
