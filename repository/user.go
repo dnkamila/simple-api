@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"gopkg.in/pg.v5"
 	"gopkg.in/pg.v5/types"
 	"log"

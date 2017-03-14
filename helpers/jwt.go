@@ -71,7 +71,7 @@ func InitPPKeyResource() error {
 }
 
 func initPrivateKeyResource() (err error) {
-	privateKey, err = rsa.GenerateKey(rand.Reader, 1024)
+	privateKey, err = rsa.GenerateKey(rand.Reader, 2048)
 
 	privateKeyPemBlock := &pem.Block{
 		Type:  "RSA PRIVATE KEY",

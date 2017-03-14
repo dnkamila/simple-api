@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="165e2f8c-91cd-4090-b4d9-9910b20d95e0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/app.go" afterPath="$PROJECT_DIR$/application/app.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/token.go" afterPath="$PROJECT_DIR$/controllers/token.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helpers/jwt.go" afterPath="$PROJECT_DIR$/helpers/jwt.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repository/user.go" afterPath="$PROJECT_DIR$/repository/user.go" />
     </list>
     <ignored path="simple-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,8 +86,8 @@
       <file leaf-file-name="user.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repository/user.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-204">
-              <caret line="38" column="62" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
+            <state relative-caret-position="30">
+              <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -106,8 +106,8 @@
       <file leaf-file-name="jwt.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/helpers/jwt.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="70" column="1" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
+            <state relative-caret-position="390">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
               <folding>
                 <element signature="e#17#130#0" expanded="true" />
               </folding>
@@ -160,9 +160,9 @@
         <option value="$PROJECT_DIR$/models/user.go" />
         <option value="$PROJECT_DIR$/repository/mock_user.go" />
         <option value="$PROJECT_DIR$/database/migrations/2017030113_create_users_table.up.sql" />
-        <option value="$PROJECT_DIR$/repository/user.go" />
         <option value="$PROJECT_DIR$/application/app.go" />
         <option value="$PROJECT_DIR$/controllers/token.go" />
+        <option value="$PROJECT_DIR$/repository/user.go" />
         <option value="$PROJECT_DIR$/helpers/jwt.go" />
       </list>
     </option>
@@ -1055,6 +1055,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/token.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="51" column="47" selection-start-line="51" selection-start-column="47" selection-end-line="51" selection-end-column="47" />
+          <folding>
+            <element signature="e#21#220#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/repository/mock_user.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1091,26 +1101,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/repository/user.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="38" column="62" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
+        <state relative-caret-position="30">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/token.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="51" column="47" selection-start-line="51" selection-start-column="47" selection-end-line="51" selection-end-column="47" />
-          <folding>
-            <element signature="e#21#220#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/helpers/jwt.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="70" column="1" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
+        <state relative-caret-position="390">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding>
             <element signature="e#17#130#0" expanded="true" />
           </folding>
