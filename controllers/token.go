@@ -2,17 +2,17 @@ package controllers
 
 import (
 	"encoding/json"
-	"net/http"
-	"simple-api/repository"
-	. "simple-api/models"
-	"log"
-	"github.com/SermoDigital/jose/jws"
 	"github.com/SermoDigital/jose/crypto"
+	"github.com/SermoDigital/jose/jws"
+	"log"
+	"net/http"
 	"simple-api/helpers"
+	. "simple-api/models"
+	"simple-api/repository"
 	"time"
 )
 
-func CreateToken(w http.ResponseWriter, r *http.Request) {
+func UpdateToken(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 
 	var user User
@@ -25,10 +25,10 @@ func CreateToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claimsSet := map[string]interface{}{
-		"id": searchedUser.Id,
+		"id":       searchedUser.Id,
 		"username": searchedUser.Username,
 	}
-	token, err := createToken(claimsSet, time.Now().Add(time.Minute * 15))
+	token, err := createToken(claimsSet, time.Now().Add(time.Minute*24*60))
 	searchedUser.Token = token
 
 	updatedUser, err := userRepository.UpdateUserTokenById(searchedUser)

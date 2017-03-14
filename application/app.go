@@ -26,5 +26,5 @@ func (app *App) InitRouter() {
 	userRouter.HandleFunc("/username/{username}", controllers.DeleteUserByUsername).Methods("DELETE")
 
 	tokenRouter := app.Router.PathPrefix("/token").Subrouter()
-	tokenRouter.HandleFunc("/", controllers.CreateToken).Methods("POST")
+	tokenRouter.HandleFunc("/", controllers.UpdateToken).Methods("PUT")
 }

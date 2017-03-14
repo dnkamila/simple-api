@@ -4,8 +4,8 @@
 package repository
 
 import (
-	. "simple-api/models"
 	gomock "github.com/golang/mock/gomock"
+	. "simple-api/models"
 )
 
 // Mock of UserRepositoryInterface interface
