@@ -27,4 +27,7 @@ func (app *App) InitRouter() {
 
 	tokenRouter := app.Router.PathPrefix("/token").Subrouter()
 	tokenRouter.HandleFunc("/", controllers.UpdateToken).Methods("PUT")
+
+	dummyRouter := app.Router.PathPrefix("/dummy").Subrouter()
+	dummyRouter.HandleFunc("/", controllers.Dummy).Methods("GET")
 }

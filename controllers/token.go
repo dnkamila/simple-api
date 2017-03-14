@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/SermoDigital/jose/crypto"
-	"github.com/SermoDigital/jose/jws"
 	"log"
 	"net/http"
 	"simple-api/helpers"
@@ -28,7 +26,7 @@ func UpdateToken(w http.ResponseWriter, r *http.Request) {
 		"id":       searchedUser.Id,
 		"username": searchedUser.Username,
 	}
-	token, err := createToken(claimsSet, time.Now().Add(time.Minute*24*60))
+	token, err := helpers.CreateJWT(claimsSet, time.Now().Add(time.Minute*24*60))
 	searchedUser.Token = token
 
 	updatedUser, err := userRepository.UpdateUserTokenById(searchedUser)
@@ -43,18 +41,4 @@ func UpdateToken(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(userJSON)
-}
-
-func createToken(claimsSet map[string]interface{}, expiration time.Time) (string, error) {
-	claims := make(jws.Claims)
-	claims.SetExpiration(expiration)
-	for key := range claimsSet {
-		claims.Set(key, claimsSet[key])
-	}
-	jwtObj := jws.NewJWT(claims, crypto.SigningMethodRS512)
-	token, err := jwtObj.Serialize(helpers.GetPrivateKey())
-	if err != nil {
-		return "", err
-	}
-	return string(token), nil
 }

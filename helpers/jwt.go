@@ -8,6 +8,12 @@ import (
 	"io/ioutil"
 	"os"
 	"simple-api/constants"
+	"time"
+	"github.com/SermoDigital/jose/jws"
+	"github.com/SermoDigital/jose/crypto"
+	"github.com/SermoDigital/jose/jwt"
+	"fmt"
+	"strings"
 )
 
 var (
@@ -121,4 +127,55 @@ func loadPublicKey() error {
 	publicKey = publicKeyGeneral.(*rsa.PublicKey)
 
 	return err
+}
+
+func CreateJWT(claimsSet map[string]interface{}, expiration time.Time) (string, error) {
+	claims := make(jws.Claims)
+	claims.SetExpiration(expiration)
+	for key := range claimsSet {
+		claims.Set(key, claimsSet[key])
+	}
+	jwtObj := jws.NewJWT(claims, crypto.SigningMethodRS512)
+	token, err := jwtObj.Serialize(GetPrivateKey())
+	if err != nil {
+		return "", err
+	}
+	return string(token), nil
+}
+
+func ValidateJWT(token string) (claims map[string]interface{}, err error) {
+	var jwtObj jwt.JWT
+	if jwtObj, err = jws.ParseJWT([]byte(token)); err != nil {
+		return
+	}
+	validator := jws.NewValidator(nil, 0, 0, func(c jws.Claims) error {
+		if c["username"] == nil {
+			err = fmt.Errorf("token contains no username")
+			return err
+		}
+		if c["id"] == nil {
+			err = fmt.Errorf("token contains no id")
+			return err
+		}
+		claims = c
+		return nil
+	})
+	err = jwtObj.Validate(GetPublicKey(), crypto.SigningMethodRS512, validator)
+	return
+}
+
+func ParseHeaderJWT(header string) (token string, err error) {
+	splitted := strings.Split(header, " ")
+
+	if len(splitted) != 2 {
+		err = fmt.Errorf("Invalid authorization header")
+		return
+	}
+
+	if strings.ToLower(splitted[0]) != "bearer" {
+		err = fmt.Errorf("Invalid token type")
+		return
+	}
+	token = splitted[1]
+	return
 }
