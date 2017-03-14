@@ -15,6 +15,7 @@ type UserRepositoryInterface interface {
 	GetUserByUsername(user *User) (*User, error)
 	UpdateUserPasswordById(user *User) (*User, error)
 	UpdateUserPasswordByUsername(user *User) (*User, error)
+	UpdateUserTokenById(user *User) (*User, error)
 	DeleteUserById(user *User) error
 	DeleteUserByUsername(user *User) error
 }
@@ -36,7 +37,6 @@ func SetUserRepository(instance UserRepositoryInterface) {
 }
 
 func (*UserRepository) CreateUser(user *User) (*User, error) {
-	fmt.Printf("repository/user db: %s\n", database.GetDB().Options().Addr)
 	err := database.GetDB().Insert(&User{
 		Username: user.Username,
 		Password: user.Password,
@@ -100,6 +100,16 @@ func (this *UserRepository) UpdateUserPasswordByUsername(user *User) (*User, err
 		Where("username = ?", user.Username).
 		Returning("*").
 		Update()
+	if err != nil {
+		log.Printf("Cannot update user %v in database. Error: %s", user, err.Error())
+		return nil, err
+	}
+
+	return this.GetUserById(user)
+}
+
+func (this *UserRepository) UpdateUserTokenById(user *User) (*User, error) {
+	_, err := database.GetDB().Model(&user).Column("token").Returning("*").Update()
 	if err != nil {
 		log.Printf("Cannot update user %v in database. Error: %s", user, err.Error())
 		return nil, err

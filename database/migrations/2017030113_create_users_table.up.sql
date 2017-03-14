@@ -2,7 +2,7 @@ CREATE TABLE "users" (
     id bigint NOT NULL,
     username character varying(50) NOT NULL,
     password character varying(50) NOT NULL,
-    token character varying(250) NOT NULL
+    token character varying(500) DEFAULT NULL
 );
 
 CREATE SEQUENCE users_id_seq
